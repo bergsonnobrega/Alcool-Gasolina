@@ -3,7 +3,6 @@ package com.bergsonnobrega.alcoolgasolina
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
-import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -20,7 +19,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var editgasolina: TextInputEditText
 
     private lateinit var btnCalcular: Button
-    private lateinit var textResultado: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         val precoGasolina = editgasolina.text.toString()
 
         val resultadoValidacao = validarCampos(precoAlcool, precoGasolina)
-        if (resultadoValidacao){
+        if (resultadoValidacao) {
             val precoAlcoolNumero = precoAlcool.toDouble()
             val precoGasolinaNumero = precoGasolina.toDouble()
             val resultado = precoAlcoolNumero / precoGasolinaNumero
@@ -68,10 +66,10 @@ class MainActivity : AppCompatActivity() {
         textInputAlcool.error = null
         textInputgasolina.error = null
 
-        if (pAlcool.isEmpty()){
+        if (pAlcool.isEmpty()) {
             textInputAlcool.error = "Digite o preço do álcool"
             return false
-        } else if (pGasolina.isEmpty()){
+        } else if (pGasolina.isEmpty()) {
             textInputgasolina.error = "Digite o preço da gasolina"
             return false
         }
@@ -86,6 +84,5 @@ class MainActivity : AppCompatActivity() {
         editgasolina = findViewById(R.id.edit_gasolina)
 
         btnCalcular = findViewById(R.id.btn_calcular)
-        textResultado = findViewById(R.id.text_resultado)
     }
 }
