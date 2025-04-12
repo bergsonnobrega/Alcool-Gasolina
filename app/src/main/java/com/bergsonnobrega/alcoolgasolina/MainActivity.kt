@@ -1,5 +1,6 @@
 package com.bergsonnobrega.alcoolgasolina
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -40,41 +41,44 @@ class MainActivity : AppCompatActivity() {
     private fun calcularMelhorPreco() {
         val precoAlcool = editAlcool.text.toString()
         val precoGasolina = editgasolina.text.toString()
-        
+
         val resultadoValidacao = validarCampos(precoAlcool, precoGasolina)
         if (resultadoValidacao){
             val precoAlcoolNumero = precoAlcool.toDouble()
             val precoGasolinaNumero = precoGasolina.toDouble()
             val resultado = precoAlcoolNumero / precoGasolinaNumero
-            if (resultado >= 0.7){
-                textResultado.text = "Melhor utilizar Gazolina"
 
-            }else{
-                textResultado.text = "Melhor utilizar Álcool"
+            val melhorOpcao = if (resultado >= 0.7) {
+                "Melhor utilizar Gasolina"
+            } else {
+                "Melhor utilizar Álcool"
             }
 
+            val intent = Intent(this, ResultadoActivity::class.java).apply {
+                putExtra("melhor_opcao", melhorOpcao)
+                putExtra("preco_alcool", precoAlcoolNumero)
+                putExtra("preco_gasolina", precoGasolinaNumero)
+                putExtra("razao", resultado)
+            }
+            startActivity(intent)
         }
     }
 
     private fun validarCampos(pAlcool: String, pGasolina: String): Boolean {
-
         textInputAlcool.error = null
         textInputgasolina.error = null
 
         if (pAlcool.isEmpty()){
             textInputAlcool.error = "Digite o preço do álcool"
             return false
-
-        }else if (pGasolina.isEmpty()){
+        } else if (pGasolina.isEmpty()){
             textInputgasolina.error = "Digite o preço da gasolina"
             return false
-
         }
         return true
     }
 
     private fun inicializarComponenteInterface() {
-
         textInputAlcool = findViewById(R.id.text_input_alcool)
         editAlcool = findViewById(R.id.edit_alcool)
 
@@ -83,6 +87,5 @@ class MainActivity : AppCompatActivity() {
 
         btnCalcular = findViewById(R.id.btn_calcular)
         textResultado = findViewById(R.id.text_resultado)
-
     }
 }
